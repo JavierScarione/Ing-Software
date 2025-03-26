@@ -21,11 +21,23 @@ def factorial(num):
         return fact 
 
 if len(sys.argv) == 1:
-    print("Debe especificar un rango en formato 'desde-hasta'")
+    print("Debe especificar un rango en formato 'desde-hasta', '-hasta' o 'desde-'")
     sys.exit()
 
 try:
-    desde, hasta = map(int, sys.argv[1].split('-'))
+    arg = sys.argv[1]
+    if '-' in arg:
+        partes = arg.split('-')
+        if arg.startswith('-'):
+            desde, hasta = 1, int(partes[1])
+        elif arg.endswith('-'):
+            desde, hasta = int(partes[0]), 60
+        else:
+            desde, hasta = map(int, partes)
+    else:
+        print("Formato inválido. Use 'desde-hasta', '-hasta' o 'desde-'")
+        sys.exit()
+    
     if desde > hasta:
         print("El primer número debe ser menor o igual al segundo número")
         sys.exit()
@@ -33,5 +45,5 @@ try:
     for num in range(desde, hasta + 1):
         print(f"Factorial {num}! es {factorial(num)}")
 except ValueError:
-    print("Debe especificar un rango válido en formato 'desde-hasta'")
+    print("Debe especificar un rango válido en formato 'desde-hasta', '-hasta' o 'desde-'")
 
