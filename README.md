@@ -1,4 +1,4 @@
-FACULTAD DE CIENCIAS Y TECNOLOGÍA UADER.
+# FACULTAD DE CIENCIAS Y TECNOLOGÍA UADER.
 
 alumno: Scarione Javier
 
@@ -8,11 +8,11 @@ año: 2025
 
 año de cursada: 3°
 
-TRABAJO NUMERO 1
+# TRABAJO NUMERO 1
 
 gestion de la configuración y python.
 
-ENLACES
+# ENLACES
 
 pdf con las pautas para el trabajo:
 
