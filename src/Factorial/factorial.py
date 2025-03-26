@@ -21,8 +21,17 @@ def factorial(num):
         return fact 
 
 if len(sys.argv) == 1:
-   print("Debe informar un número!")
-   sys.exit()
-num=int(sys.argv[1])
-print("Factorial ",num,"! es ", factorial(num)) 
+    print("Debe especificar un rango en formato 'desde-hasta'")
+    sys.exit()
+
+try:
+    desde, hasta = map(int, sys.argv[1].split('-'))
+    if desde > hasta:
+        print("El primer número debe ser menor o igual al segundo número")
+        sys.exit()
+    
+    for num in range(desde, hasta + 1):
+        print(f"Factorial {num}! es {factorial(num)}")
+except ValueError:
+    print("Debe especificar un rango válido en formato 'desde-hasta'")
 
