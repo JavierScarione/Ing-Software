@@ -1,20 +1,20 @@
 # FACULTAD DE CIENCIAS Y TECNOLOGÍA UADER.
 
-alumno: Scarione Javier
+**alumno:** Scarione Javier
 
-docente: Colla Pedro E.
+**docente:** Colla Pedro E.
 
-año: 2025
+**año:** 2025
 
-año de cursada: 3°
+**año de cursada:** 3°
 
-# TRABAJO NUMERO 1
+## TRABAJO NUMERO 1
 
 gestion de la configuración y python.
 
-# ENLACES
+## ENLACES
 
-pdf con las pautas para el trabajo:
+[pdf con las pautas para el trabajo](https://campus.fcytcdelu.uader.edu.ar/pluginfile.php/50233/mod_resource/content/2/IS2_TP1_Gestio%CC%81n%20de%20la%20Configuracio%CC%81n%20y%20Python.pdf)
 
-https://campus.fcytcdelu.uader.edu.ar/pluginfile.php/50233/mod_resource/content/2/IS2_TP1_Gestio%CC%81n%20de%20la%20Configuracio%CC%81n%20y%20Python.pdf
+
 
