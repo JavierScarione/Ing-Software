@@ -6,6 +6,7 @@
 #* Creative commons                                                        *
 #*-------------------------------------------------------------------------*
 import sys
+# Funcion factorial definida
 def factorial(num): 
     if num < 0: 
         print("Factorial de un número negativo no existe")
@@ -24,6 +25,7 @@ if len(sys.argv) == 1:
     print("Debe especificar un rango en formato 'desde-hasta', '-hasta' o 'desde-'")
     sys.exit()
 
+# Codigo para que funcione el formato desde- , hasta- y ambos.
 try:
     arg = sys.argv[1]
     if '-' in arg:
