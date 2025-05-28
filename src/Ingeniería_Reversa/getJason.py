@@ -1,32 +1,97 @@
-# Decompiled with PyLingual (https://pylingual.io)
-# Internal filename: getJason.py
-# Bytecode version: 3.12.0rc2 (3531)
-# Source timestamp: 2025-05-06 19:05:36 UTC (1746558336)
 
-# Este programa recupera una clave (por defecto "token1") desde el archivo "sitedata.json"
+"""
+    Javier Scarione, Ingeniería de Software II, 2025
 
-import os
+    “copyright UADER_FCyT_IS2 © 2022,2024 todos los derechos reservados"
+
+    Este programa permite recuperar una clave desde un archivo JSON usando programación orientada a objetos. 
+    Utilizando el patrón Singleton y una estrategia de "branching by abstraction" para facilitar refactorizaciones futuras.
+"""
+
 import json
 import sys
+from abc import ABC, abstractmethod
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-jsonfile = os.path.join(script_dir, 'sitedata.json')
-jsonkey = sys.argv[1] if len(sys.argv) > 1 else 'token1'
+VERSION = "versión 1.1"
 
-try:
-    with open(jsonfile, 'r') as myfile:
-        data = myfile.read()
 
-    obj = json.loads(data)
+class JsonKeyRetrieverInterface(ABC):
 
-    if jsonkey in obj:
-        print(str(obj[jsonkey]))
-    else:
-        print(f"Error: La clave '{jsonkey}' no se encuentra en '{jsonfile}'.")
+    @abstractmethod
+    def get_value(self, key):
+        pass
 
-except FileNotFoundError:
-    print(f"Error: El archivo '{jsonfile}' no existe.")
-except json.JSONDecodeError:
-    print(f"Error: El archivo '{jsonfile}' no contiene un JSON válido.")
-except Exception as e:
-    print(f"Error inesperado: {e}")
+
+class JsonKeyRetrieverSingleton(JsonKeyRetrieverInterface):
+
+    _instance = None
+
+    def __new__(cls, filepath):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialize(filepath)
+        return cls._instance
+
+    def _initialize(self, filepath):
+        self.filepath = filepath
+        self.data = self._load_json()
+
+    def _load_json(self):
+        try:
+            with open(self.filepath, "r", encoding="utf-8") as file:
+                return json.load(file)
+        except FileNotFoundError:
+            raise ValueError(f"Archivo no encontrado: '{self.filepath}'")
+        except json.JSONDecodeError as err:
+            raise ValueError(f"JSON inválido en '{self.filepath}': {err}") from err
+
+    def get_value(self, key):
+        try:
+            return self.data[key]
+        except KeyError as err:
+            raise ValueError(f"Clave '{key}' no encontrada en el archivo JSON.") from err
+
+
+def mostrar_version():
+    print(VERSION)
+
+
+def mostrar_uso():
+    print(
+        "Uso:\n"
+        "  python getJason.py <archivo_json> [clave]\n"
+        "  python getJason.py -v\n\n"
+        "- <archivo_json>: Ruta al archivo JSON (obligatorio)\n"
+        "- [clave]: Clave a recuperar (opcional, por defecto 'token1')"
+    )
+
+
+def main():
+    args = sys.argv[1:]
+
+    if not args:
+        mostrar_uso()
+        return
+
+    if args[0] == "-v":
+        mostrar_version()
+        return
+
+    if len(args) > 2:
+        print("Error: Demasiados argumentos.")
+        mostrar_uso()
+        return
+
+    json_file = args[0]
+    json_key = args[1] if len(args) == 2 else "token1"
+
+    try:
+        retriever = JsonKeyRetrieverSingleton(json_file)
+        value = retriever.get_value(json_key)
+        print(value)
+    except ValueError as err:
+        print(f"Error: {err}")
+
+
+if __name__ == "__main__":
+    main()
